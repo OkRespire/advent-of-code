@@ -1,7 +1,8 @@
 use std::fs::File;
 use std::io::{BufRead, BufReader};
 fn main() {
-    let file = File::open("input.txt").unwrap();
+    let file_path = "src/input.txt";
+    let file = File::open(file_path).unwrap();
     let reader = BufReader::new(file);
     let mut valid_count = 0;
 
@@ -16,14 +17,14 @@ fn main() {
                 .collect();
 
             if traverse(line_arr) {
-                validCount += 1;
+                valid_count += 1;
                 println!("Line {}: Valid", line_num + 1);
             } else {
                 println!("Line {}: Invalid", line_num + 1);
             }
         }
 
-        println!("{}", validCount);
+        println!("{}", valid_count);
     }
 }
 fn traverse(line_arr: Vec<i32>) -> bool {
