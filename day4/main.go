@@ -59,119 +59,208 @@ func main() {
 	// part1(cw_arr, params)
 	part1Simple(cw_arr, params)
 
-	for _, v := range cw_arr {
-		fmt.Println(v)
-		break
-	}
 }
 
 func part1Simple(arr [][]string, params Part1Params) {
 	str := ""
+	count := 0
 
-	for i := 0; i < len(arr); i++ {
-		fmt.Println(arr[0][i])
+	for _, v := range arr {
+		for j := 0; j < len(v); j++ {
 
-		if params.IsA && params.IsM && params.IsX && params.IsS {
-			fmt.Println(str)
-			str = ""
-			params = Part1Params{IsX: false, IsM: false, IsA: false, IsS: false}
+			// fmt.Println(v[j])
+
+			if params.IsA && params.IsM && params.IsX && params.IsS {
+				fmt.Println(str)
+				str = ""
+				params = Part1Params{IsX: false, IsM: false, IsA: false, IsS: false}
+				fmt.Println(count)
+				count++
+			}
+
+			if v[j] == X {
+				if params.IsX {
+					params = Part1Params{IsX: true, IsM: false, IsA: false, IsS: false}
+					// fmt.Println("here")
+					str = "X"
+					continue
+				}
+				str += v[j]
+				params.IsX = true
+			} else if v[j] == M {
+				if params.IsM {
+					params = Part1Params{IsX: false, IsM: true, IsA: false, IsS: false}
+					// fmt.Println("here")
+					str = "M"
+					continue
+				}
+
+				str += v[j]
+				params.IsM = true
+			} else if v[j] == A {
+				if params.IsA {
+
+					params = Part1Params{IsX: false, IsM: false, IsA: true, IsS: false}
+					// fmt.Println("here")
+					str = "A"
+
+					continue
+				}
+
+				str += v[j]
+
+				params.IsA = true
+			} else if v[j] == S {
+				if params.IsS {
+					params = Part1Params{IsX: false, IsM: false, IsA: false, IsS: true}
+					// fmt.Println("here")
+					str = "S"
+					continue
+				}
+
+				str += v[j]
+				params.IsS = true
+			}
+
 		}
-
-		if arr[0][i] == X {
-			if params.IsX {
-				params = Part1Params{IsX: true, IsM: false, IsA: false, IsS: false}
-				fmt.Println("here")
-				str = "X"
-				continue
-			}
-			str += arr[0][i]
-			params.IsX = true
-		} else if arr[0][i] == M {
-			if params.IsM {
-				params = Part1Params{IsX: false, IsM: true, IsA: false, IsS: false}
-				fmt.Println("here")
-				str = "M"
-				continue
-			}
-
-			str += arr[0][i]
-			params.IsM = true
-		} else if arr[0][i] == A {
-			if params.IsA {
-				params = Part1Params{IsX: false, IsM: false, IsA: true, IsS: false}
-				fmt.Println("here")
-				str = "A"
-
-				continue
-			}
-
-			str += arr[0][i]
-
-			params.IsA = true
-		} else if arr[0][i] == S {
-			if params.IsS {
-				params = Part1Params{IsX: false, IsM: false, IsA: false, IsS: true}
-				fmt.Println("here")
-				str = "S"
-				continue
-			}
-
-			str += arr[0][i]
-			params.IsS = true
-		}
-
 	}
+
+	countO := vertical(arr, params)
+
+	fmt.Println(count)
+	count = count + countO
+	fmt.Println(count)
+	fmt.Println(countO)
 }
 
-// func part1(array [][]rune, params Part1Params) {
+func vertical(arr [][]string, params Part1Params) int {
+	str := ""
+	count := 0
+
+	for i := range arr {
+		for j := 0; j < len(arr); j++ {
+
+			// fmt.Println(arr[j][i])
+
+			if params.IsA && params.IsM && params.IsX && params.IsS {
+				fmt.Println(str)
+				str = ""
+				params = Part1Params{IsX: false, IsM: false, IsA: false, IsS: false}
+				count++
+			}
+
+			if arr[j][i] == X {
+				if params.IsX {
+					params = Part1Params{IsX: true, IsM: false, IsA: false, IsS: false}
+					// fmt.Println("here")
+					str = "X"
+					continue
+				}
+				str += arr[j][i]
+				params.IsX = true
+			} else if arr[j][i] == M {
+				if params.IsM {
+					params = Part1Params{IsX: false, IsM: true, IsA: false, IsS: false}
+					// fmt.Println("here")
+					str = "M"
+					continue
+				}
+
+				str += arr[j][i]
+				params.IsM = true
+			} else if arr[j][i] == A {
+				if params.IsA {
+					params = Part1Params{IsX: false, IsM: false, IsA: true, IsS: false}
+					// fmt.Println("here")
+					str = "A"
+
+					continue
+				}
+
+				str += arr[j][i]
+
+				params.IsA = true
+			} else if arr[j][i] == S {
+				if params.IsS {
+					params = Part1Params{IsX: false, IsM: false, IsA: false, IsS: true}
+					// fmt.Println("here")
+					str = "S"
+					continue
+				}
+
+				str += arr[j][i]
+				params.IsS = true
+			}
+
+		}
+	}
+
+	fmt.Println("Count ", count)
+
+	return count
+}
+
+// func diagonals(arr [][]string, params Part1Params) int {
 //
-// 	for i := 0; i < len(array); i++ {
-// 		for j := 0; j < len(array[i]); j++ {
-// 			newCoords := coords{i, j}
-// 			if array[i][j] == X {
-// 				params = Part1Params{IsX: true}
+// 	str := ""
+// 	count := 0
 //
-// 				// res := lookAtNeighbours(array, newCoords, params)
+// 	for _, v := range arr {
+// 		for j := 0; j < len(v); j++ {
+//
+// 			fmt.Println(v[j])
+//
+// 			if params.IsA && params.IsM && params.IsX && params.IsS {
+// 				fmt.Println(str)
+// 				str = ""
+// 				params = Part1Params{IsX: false, IsM: false, IsA: false, IsS: false}
+// 				count++
 // 			}
-// 			if array[i][j] == M {
 //
-// 				params = Part1Params{IsM: true}
-// 				newCoords := coords{i, j}
+// 			if v[j] == X {
+// 				if params.IsX {
+// 					params = Part1Params{IsX: true, IsM: false, IsA: false, IsS: false}
+// 					fmt.Println("here")
+// 					str = "X"
+// 					continue
+// 				}
+// 				str += v[j]
+// 				params.IsX = true
+// 			} else if v[j] == M {
+// 				if params.IsM {
+// 					params = Part1Params{IsX: false, IsM: true, IsA: false, IsS: false}
+// 					fmt.Println("here")
+// 					str = "M"
+// 					continue
+// 				}
 //
-// 				// res := lookAtNeighbours(array, newCoords, params)
-// 			}
-// 			if array[i][j] == A {
+// 				str += v[j]
+// 				params.IsM = true
+// 			} else if v[j] == A {
+// 				if params.IsA {
+// 					params = Part1Params{IsX: false, IsM: false, IsA: true, IsS: false}
+// 					fmt.Println("here")
+// 					str = "A"
 //
-// 				params = Part1Params{IsA: true}
+// 					continue
+// 				}
 //
-// 				// res := lookAtNeighbours(array, newCoords, params)
-// 			}
-// 			if array[i][j] == S {
+// 				str += v[j]
 //
-// 				newCoords := coords{i, j}
-// 				params := Part1Params{IsS: true}
-// 				// res := lookAtNeighbours(array, newCoords, params)
+// 				params.IsA = true
+// 			} else if v[j] == S {
+// 				if params.IsS {
+// 					params = Part1Params{IsX: false, IsM: false, IsA: false, IsS: true}
+// 					fmt.Println("here")
+// 					str = "S"
+// 					continue
+// 				}
+//
+// 				str += v[j]
+// 				params.IsS = true
 // 			}
 //
 // 		}
-// 	}
-//
+//     return count
 // }
-
-// Look at neighbours, all directions
-// func lookAtNeighbours(arr [][]rune, coords coords, params Part1Params) int {
 //
-// 	if params.IsA && params.IsM && params.IsS && params.IsX {
-// 		return 1
-// 	}
-//
-// 	//TODO: Write logic for if its at edges of x value
-// 	//look at x neighbours
-// 	if coords.x == 0 {
-// 		// look at right neighbour
-//
-// 	} else if coords.x == len(arr) {
-// 		// look at left neigbhour
-// 	}
-//
-// }
