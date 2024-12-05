@@ -61,6 +61,7 @@ func main() {
 
 }
 
+// Horizontal
 func part1Simple(arr [][]string, params Part1Params) {
 	str := ""
 	count := 0
