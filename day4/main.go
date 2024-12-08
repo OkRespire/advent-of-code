@@ -69,8 +69,6 @@ func part1Simple(arr [][]string, params Part1Params) {
 	for _, v := range arr {
 		for j := 0; j < len(v); j++ {
 
-			// fmt.Println(v[j])
-
 			if params.IsA && params.IsM && params.IsX && params.IsS {
 				fmt.Println(str)
 				str = ""
@@ -128,7 +126,6 @@ func part1Simple(arr [][]string, params Part1Params) {
 
 	countO := vertical(arr, params)
 
-	fmt.Println(count)
 	count = count + countO
 	fmt.Println(count)
 	fmt.Println(countO)
@@ -155,7 +152,14 @@ func vertical(arr [][]string, params Part1Params) int {
 					params = Part1Params{IsX: true, IsM: false, IsA: false, IsS: false}
 					// fmt.Println("here")
 					str = "X"
-					continue
+					if arr[j][i+1] == M {
+						if arr[j][i+2] == A {
+							if arr[j][i+3] == S {
+								count++
+							}
+						}
+					}
+
 				}
 				str += arr[j][i]
 				params.IsX = true
@@ -184,6 +188,10 @@ func vertical(arr [][]string, params Part1Params) int {
 			} else if arr[j][i] == S {
 				if params.IsS {
 					params = Part1Params{IsX: false, IsM: false, IsA: false, IsS: true}
+					if arr[j][i+1] == M {
+
+					}
+
 					// fmt.Println("here")
 					str = "S"
 					continue
